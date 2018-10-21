@@ -1,28 +1,28 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import Uploader from './components/Uploader'
 
 class App extends Component {
+
+  uploader = null;
+  constructor(props) {
+    super(props);
+      let ip = "localhost";
+      let port = "8880";
+      this.ws = new WebSocket("wss:"+ip+":"+port+"?username="+"18487545454"+"&password="+"fdfdfdf");
+      this.uploader = new Uploader({}, this.ws);
+  }
+
+  uploadFile = (event) => {
+  };
+
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+        <div>
+          <input type="file" id="uploadFileInput" onChange={this.uploadFile}/>
+        </div>
     );
   }
 }
-
 export default App;
