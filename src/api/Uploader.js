@@ -7,42 +7,50 @@
 class Uploader {
     /**
      * 文件读取对象
+     * @private
      */
-    reader = new FileReader();
+    _reader = new FileReader();
     /**
      * 当前已经读取总数
      * @type {number}
+     * @private
      */
-    currentLoaded = 0;
+    _currentLoaded = 0;
     /**
      * 当前读取的文件对象
+     * @private
      */
-    file = null;
+    _file = null;
     /**
      * 当前文件的总字节数
      * @type {number}
      */
-    total = 0;
+    _total = 0;
     /**
      * 上传开始时间
+     * @private
+     * @type number
      */
-    startTime;
+    _startTime;
     /**
      *  文件分片数量
      * @type {number}
      */
-    slice = 1;
+    _slice = 1;
     /**
      * 当前被发送的文件分片索引
      * @type {number}
      */
-    index = 1;
+    _index = 1;
     /**
      * webSocket句柄
      * @type {WebSocket}
      */
-
-    webSocket = null;
+    _webSocket = null;
+    /**
+     * 属性
+     * @type {{step: number, enableRead: boolean, callback: null}}
+     */
     props = {
         // 每次读取的文件大小
         "step": 1024 * 256,
@@ -53,17 +61,15 @@ class Uploader {
     };
 
 
-    constructor(props, webSocket = null) {
+    constructor(props) {
         this.props = Object.assign(this.props, props);
-        this.webSocket = webSocket;
-        console.log(webSocket)
-        this.reader.onload = this.onload;
+        this.reader.onload = this.onLoad;
     }
 
     /**
      * 文件读取完成时
      */
-    onload = (event) => {
+    onLoad = (event) => {
         console.log(event);
         console.log("读取总数：" + event.loaded);
         if (this.props.enableRead === false)
@@ -128,7 +134,7 @@ class Uploader {
      *
      */
     readBlob = () => {
-        let blob = this.file.slice(this.currentLoaded, this.currentLoaded + this.props.step);
+        let blob = this.file.slice(this._currentLoaded, this._currentLoaded + this.props.step);
         this.reader.readAsDataURL(blob);
     }
 

@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import Uploader from './components/Uploader'
+import Uploader from './api/Uploader'
+import {customWebSocket} from './api/CustomWebSocket'
 
 class App extends Component {
 
-  uploader = null;
+  customWebSocket = null;
+
   constructor(props) {
     super(props);
-      let ip = "localhost";
-      let port = "8880";
-      this.ws = new WebSocket("wss:"+ip+":"+port+"?username="+"18487545454"+"&password="+"fdfdfdf");
-      this.uploader = new Uploader({}, this.ws);
+    this.customWebSocket = customWebSocket;
+    console.log(this.customWebSocket);
   }
 
   uploadFile = (event) => {
