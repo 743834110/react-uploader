@@ -3,47 +3,38 @@
  */
 
 /**
- * 登录常量
- * @type {string}
+ * 握手信息         1
+ * 鉴权信息         3
+ * 聊天信息         5
+ * 关闭信息         14
+ * 获取用户信息     17
+ * 获取用户消息     19
+ * @type {{HANDSHAKE: number, AUTH: number, LOGIN: number, CHAT: number, CLOSE: number, USER: number, MESSAGE: number}}
  */
-export const LOGIN = "5";
+export const REMOTE = {
+    HANDSHAKE: 1,
+    AUTH: 3,
+    LOGIN: 5,
+    CHAT: 11,
+    CLOSE: 14,
+    USER: 17,
+    MESSAGE: 19
+};
 /**
- * 握手常量
- * @type {string}
+ *
+ * @type {{}}
  */
-export const HANDSHAKE = "1";
-/**
- * 聊天常量
- * @type {string}
- */
-export const CHAT = "11";
-/**
- * 鉴权常量
- * @type {string}
- */
-export const AUTH = "3";
-/**
- * 关闭退出常量
- * @type {string}
- */
-export const CLOSE = "14";
-/**
- * 获取用户信息
- * @type {string}
- */
-export const MESSAGE = "19";
-/**
- * 获取用户消息
- * @type {string}
- */
-export const USER = "17";
+export const LOCAL = {
+
+};
+
 /**
  * 消息传播范围
  * @type {{LOCAL: string, REMOTE: string}}
  */
-export const messageScope = {
+export const MESSAGE_SCOPE = {
     LOCAL: "LOCAL",
-    "REMOTE": "REMOTE"
+    REMOTE: "REMOTE"
 };
 
 
@@ -52,7 +43,7 @@ export const messageScope = {
  * state可见度
  * @type {{SHOW_ALL: string, SHOW_COMPLETED: string, SHOW_ACTIVE: string}}
  */
-export const visibilityFilter = {
+export const VISIBILITY_FILTER = {
     SHOW_ALL: 'SHOW_ALL',
     SHOW_COMPLETED: 'SHOW_COMPLETED',
     SHOW_ACTIVE: 'SHOW_ACTIVE',

@@ -3,7 +3,7 @@
  *
  */
 
-import {visibilityFilter, messageScope} from '../action/actions'
+import {VISIBILITY_FILTER, MESSAGE_SCOPE} from '../action/actions'
 
 /**
  * 任务类型
@@ -12,8 +12,8 @@ import {visibilityFilter, messageScope} from '../action/actions'
  * @type {{type: string, filter: string, toDos: Array}}
  */
 const initialState = {
-    "type": messageScope.LOCAL,
-    "filter": visibilityFilter.SHOW_ALL,
+    "type": MESSAGE_SCOPE.LOCAL,
+    "filter": VISIBILITY_FILTER.SHOW_ALL,
     "toDos": [
 
     ]

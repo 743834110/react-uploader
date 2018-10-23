@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import logo from '../../logo.svg';
 import './App.css';
-import Uploader from './api/Uploader'
-import {customWebSocket} from './api/CustomWebSocket'
+import Uploader from '../../api/CustomWebSocket'
+import {customWebSocket} from '../../api/CustomWebSocket'
 
 class App extends Component {
 
