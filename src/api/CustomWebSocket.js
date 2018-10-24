@@ -1,4 +1,7 @@
 
+import imStore from './store/ImStore'
+import {lostConnect} from "./store/action/actions";
+
 /**
  * 代理webSocket对象
  * 以提供事件通知和人性化处理
@@ -25,13 +28,14 @@ class CustomWebSocket{
 
     constructor(props = {"ip": "eee"}){
         Object.assign(this.props, props);
+
     }
 
     /**
      * 与服务器进行连接
-     * @private
+     * @public
      */
-    _connect = () => {
+    connect = () => {
         let {protocol, ip, port, userName, password} = this.props;
         this._ws = new WebSocket(protocol + ":"+ip+":"+port+"?username="+ userName +"&password="+ password);
         this._ws.onerror = this._onError;
@@ -45,7 +49,7 @@ class CustomWebSocket{
      * @private
      */
     _onError = (event) => {
-        console.log(this._ws)
+        imStore.dispatch(lostConnect());
     };
     /**
      *
@@ -56,7 +60,7 @@ class CustomWebSocket{
         console.log(event)
     };
     /**
-     *
+     * 对服务器返回的消息进行重新组织，然后进行动作分发
      * @param event
      * @private
      */
@@ -83,9 +87,6 @@ class CustomWebSocket{
     keepAlive() {
         if (this._ws.readyState === 1)
             return true;
-        else {
-            this._connect();
-        }
     }
 
     /**
@@ -97,10 +98,6 @@ class CustomWebSocket{
         if (alive) {
             this._ws.send(data);
         }
-        else {
-
-        }
-
     }
 
     /**

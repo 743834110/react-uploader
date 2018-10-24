@@ -1,3 +1,8 @@
+
+import {customWebSocket} from 'CustomWebSocket'
+import imStore from './store/ImStore'
+import {MESSAGE_SCOPE, REMOTE} from "./store/action/actions";
+
 /**
  * Created by Administrator on 2018/10/21.
  * @author litianfeng
@@ -44,7 +49,7 @@ class Uploader {
     _index = 1;
     /**
      * webSocket句柄
-     * @type {WebSocket}
+     * @type {CustomWebSocket}
      */
     _webSocket = null;
     /**
@@ -63,8 +68,21 @@ class Uploader {
 
     constructor(props) {
         this.props = Object.assign(this.props, props);
-        this.reader.onload = this.onLoad;
+        this._reader.onload = this.onLoad;
+        imStore.subscribe(this._onMessage)
     }
+
+    /**
+     * 消息通知
+     * @private
+     */
+    _onMessage = () => {
+        let state = imStore.getState();
+        if (MESSAGE_SCOPE.REMOTE === state.type) {
+
+        }
+    };
+
 
     /**
      * 文件读取完成时
@@ -82,9 +100,9 @@ class Uploader {
      */
     prepareAndSend = (loaded) => {
         // 将分段数据上传到服务器
-        var blob = this.reader.result;
+        let blob = this.reader.result;
         // 使用WebSocket 服务器发送数据
-        var message = JSON.stringify({
+        let message = JSON.stringify({
             "from": "55555",
             "to": "888",
             "cmd": 11,
@@ -97,17 +115,17 @@ class Uploader {
             "extras": {
                 "file": {
 
-                    "name": this.file.name,
-                    "size": this.file.size,
-                    "index": this.index,
-                    "slice": this.slice,
+                    "name": this._file.name,
+                    "size": this._file.size,
+                    "index": this._index,
+                    "slice": this._slice,
                     "currentLoading": loaded
                 }
             }
         });
 
-        this.webSocket.send(message);
-    }
+        this._webSocket.send(message);
+    };
     /**
      * 中止上传
      */
@@ -126,16 +144,18 @@ class Uploader {
      * @param file
      */
     uploadFile = (file) => {
-        this.file = file;
-        this.readBlob();
-    };
+        this._file = file;
+        this._total = file.size;
+        this._startTime = new Date().getTime();
+        this._readBlob();
+    }
 
     /**
-     *
+     * 文件分片
      */
-    readBlob = () => {
+    _readBlob = () => {
         let blob = this.file.slice(this._currentLoaded, this._currentLoaded + this.props.step);
-        this.reader.readAsDataURL(blob);
+        this._reader.readAsDataURL(blob);
     }
 
 

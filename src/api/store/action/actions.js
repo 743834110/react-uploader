@@ -18,14 +18,31 @@ export const REMOTE = {
     CHAT: 11,
     CLOSE: 14,
     USER: 17,
-    MESSAGE: 19
+    MESSAGE: 19,
+    valueOf: function (code) {
+        for (let name in REMOTE) {
+            if (LOCAL[name] === code)
+                return name;
+        }
+    }
 };
 /**
- *
+ * 表示失去连接状态
+ * 表示处于连接状态
+ * 表示开始建立连接
+ * 用socket中的readyState中的状态标号组成
  * @type {{}}
  */
 export const LOCAL = {
-
+    LOST_CONNECT: "023",
+    ON_CONNECT: "001",
+    CONNECTING: "000",
+    valueOf: function (code) {
+        for (let name in LOCAL) {
+            if (LOCAL[name] === code)
+                return name;
+        }
+    }
 };
 
 /**
@@ -34,7 +51,13 @@ export const LOCAL = {
  */
 export const MESSAGE_SCOPE = {
     LOCAL: "LOCAL",
-    REMOTE: "REMOTE"
+    REMOTE: "REMOTE",
+    valueOf: function (code) {
+        for (let name in MESSAGE_SCOPE) {
+            if (LOCAL[name] === code)
+                return name;
+        }
+    }
 };
 
 
@@ -47,6 +70,12 @@ export const VISIBILITY_FILTER = {
     SHOW_ALL: 'SHOW_ALL',
     SHOW_COMPLETED: 'SHOW_COMPLETED',
     SHOW_ACTIVE: 'SHOW_ACTIVE',
+    valueOf: function (code) {
+        for (let name in VISIBILITY_FILTER) {
+            if (LOCAL[name] === code)
+                return name;
+        }
+    }
 };
 
 /**
@@ -56,7 +85,17 @@ export const VISIBILITY_FILTER = {
  */
 export function login(text) {
     return {
-        type: LOGIN,
+        type: REMOTE.LOGIN,
         text
+    }
+}
+
+/**
+ * 失去连接事件
+ */
+export function lostConnect() {
+
+    return {
+        type: LOCAL.LOST_CONNECT
     }
 }

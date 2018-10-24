@@ -1,21 +1,23 @@
 import React, { Component } from 'react';
 import logo from '../../logo.svg';
 import './App.css';
-import Uploader from '../../api/CustomWebSocket'
 import {customWebSocket} from '../../api/CustomWebSocket'
+import imStore from '../../api/store/ImStore'
 
 class App extends Component {
 
-  customWebSocket = null;
-
   constructor(props) {
     super(props);
-    this.customWebSocket = customWebSocket;
-    console.log(this.customWebSocket);
+    imStore.subscribe(this.onMessage);
+    customWebSocket.connect();
   }
 
-  uploadFile = (event) => {
+  onMessage = () => {
+    let state = imStore.getState();
+    console.log(state)
   };
+
+
 
   render() {
     return (

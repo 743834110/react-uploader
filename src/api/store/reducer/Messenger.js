@@ -20,12 +20,18 @@ const initialState = {
 };
 
 /**
- *
+ * reducer函数，控制状态的变化
  * @param state
  * @param action
  */
 export default function (state = initialState, action) {
 
+    console.log(action)
+    switch (action.type) {
+
+        default:
+            return state;
+    }
 }
 
 
