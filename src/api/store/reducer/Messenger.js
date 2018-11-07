@@ -25,12 +25,11 @@ const initialState = {
  * @param action
  */
 export default function (state = initialState, action) {
-
     console.log(action)
     switch (action.type) {
 
         default:
-            return state;
+            return Object.assign({}, initialState, action);
     }
 }
 

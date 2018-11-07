@@ -12,18 +12,21 @@
  * @type {{HANDSHAKE: number, AUTH: number, LOGIN: number, CHAT: number, CLOSE: number, USER: number, MESSAGE: number}}
  */
 export const REMOTE = {
-    HANDSHAKE: 1,
-    AUTH: 3,
-    LOGIN: 5,
-    CHAT: 11,
-    CLOSE: 14,
-    USER: 17,
-    MESSAGE: 19,
+    HANDSHAKE_REQ: 1,
+    HANDSHAKE_RESP: 2,
+    AUTH_REQ: 3,
+    LOGIN_REQ: 5,
+    CHAT_REQ: 11,
+    CLOSE_REQ: 14,
+    USER_REQ: 17,
+    MESSAGE_REQ: 19,
+    UNKNOWN: 0,
     valueOf: function (code) {
         for (let name in REMOTE) {
-            if (LOCAL[name] === code)
+            if (REMOTE[name] === code)
                 return name;
         }
+        return REMOTE.UNKNOWN;
     }
 };
 /**
@@ -93,9 +96,49 @@ export function login(text) {
 /**
  * 失去连接事件
  */
-export function lostConnect() {
+export function lostConnect(text = "") {
 
     return {
-        type: LOCAL.LOST_CONNECT
+        type: MESSAGE_SCOPE.LOCAL,
+        doDos: [
+            {
+                type: LOCAL.LOST_CONNECT,
+                text
+            }
+        ]
     }
 }
+
+/**
+ * 网络开始正常运作事件
+ * @return {{type: string}}
+ */
+export function connecting() {
+
+    return {
+        type: MESSAGE_SCOPE.LOCAL,
+        toDos: [
+            {
+                type: LOCAL.CONNECTING
+            }
+        ]
+    }
+}
+
+/**
+ * 消息响应对象组件函数
+ * @param messageScope
+ * @param response
+ * @return {{type: string, toDos: *[], reachTime: Date}}
+ */
+export function onMessage(messageScope = MESSAGE_SCOPE.LOCAL, response) {
+
+    return {
+        type: messageScope,
+        toDos: [
+            response
+        ],
+        reachTime: new Date()
+    }
+}
+

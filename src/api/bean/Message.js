@@ -3,59 +3,29 @@
  */
 export default class Message {
     /**
-     * @private
+     *
      */
-    _createTime;
+    createTime;
     /**
-     * @private
+     *
      */
-    _id;
+    id;
     /**
-     * @private
+     *
      */
-    _cmd;
+    cmd;
     /**
-     * @private
+     *
      */
-    _extras;
+    extras;
 
 
     constructor(cmd, extras) {
-        this._cmd = cmd;
-        this._extras = extras;
-        this.createTime = new Date().getTime();
+        this.createTime = new Date();
+        this.cmd = cmd;
+        this.extras = extras;
     }
 
-    get createTime() {
-        return this._createTime;
-    }
 
-    set createTime(value) {
-        this._createTime = value;
-    }
-
-    get id() {
-        return this._id;
-    }
-
-    set id(value) {
-        this._id = value;
-    }
-
-    get cmd() {
-        return this._cmd;
-    }
-
-    set cmd(value) {
-        this._cmd = value;
-    }
-
-    get extras() {
-        return this._extras;
-    }
-
-    set extras(value) {
-        this._extras = value;
-    }
 
 }

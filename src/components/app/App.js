@@ -1,34 +1,29 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import logo from '../../logo.svg';
 import './App.css';
-import {customWebSocket} from '../../api/CustomWebSocket'
-import imStore from '../../api/store/ImStore'
-import ChatBody from "../../api/bean/ChatBody";
+import {LOCAL, MESSAGE_SCOPE, REMOTE} from "../../api/store/action/actions";
+import {system} from "../../api/system/System";
 import ImUtil from "../../api/util/ImUtil";
+import imStore from "../../api/store/ImStore";
 
 class App extends Component {
 
-  constructor(props) {
-    super(props);
-    imStore.subscribe(this.onMessage);
-    customWebSocket.connect();
-    let loginReqBody = ImUtil.sendLoginReqPacket("743834110", "2217092039");
-    console.log(loginReqBody)
-  }
+    constructor(props) {
+        super(props);
 
-  onMessage = () => {
-    let state = imStore.getState();
-    console.log(state)
-  };
+    }
 
+    componentDidMount() {
 
+    }
 
-  render() {
-    return (
-        <div>
-          <input type="file" id="uploadFileInput" onChange={this.uploadFile}/>
-        </div>
-    );
-  }
+    render() {
+        return (
+            <div>
+                <input type="file" id="uploadFileInput" onChange={this.uploadFile}/>
+            </div>
+        );
+    }
 }
+
 export default App;

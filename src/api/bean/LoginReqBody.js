@@ -1,4 +1,5 @@
 import Message from "./Message";
+import {REMOTE} from "../store/action/actions";
 
 /**
  * 登录信息消息体
@@ -9,57 +10,22 @@ export default class LoginReqBody extends Message{
     /**
      * 用户名
      */
-    _userName;
+    userName;
     /**
      * 密码
      */
-    _password;
+    password;
     /**
      * 校验码
      */
-    _token;
+    token;
 
 
-    constructor(cmd, extras, userName, password, token) {
-        super(cmd, extras);
-        this._userName = userName;
-        this._password = password;
-        this._token = token;
-    }
-
-    get userName() {
-        return this._userName;
-    }
-
-    set userName(value) {
-        this._userName = value;
-    }
-
-    get password() {
-        return this._password;
-    }
-
-    set password(value) {
-        this._password = value;
-    }
-
-    get token() {
-        return this._token;
-    }
-
-    set token(value) {
-        this._token = value;
-    }
-
-    toString() {
-        return {
-            cmd: this.cmd,
-            extras: this.extras,
-            createTime: this.createTime,
-            userName: this.userName,
-            password: this.password,
-            token: this.token
-        }
+    constructor(extras, userName, password, token) {
+        super(REMOTE.LOGIN, extras);
+        this.userName = userName;
+        this.password = password;
+        this.token = token;
     }
 
 

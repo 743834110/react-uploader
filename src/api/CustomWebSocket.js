@@ -1,6 +1,6 @@
 
 import imStore from './store/ImStore'
-import {lostConnect} from "./store/action/actions";
+import {lostConnect, MESSAGE_SCOPE, onMessage} from "./store/action/actions";
 
 /**
  * 代理webSocket对象
@@ -16,9 +16,7 @@ class CustomWebSocket{
     props = {
         "protocol": "wss",
         "ip": "localhost",
-        "port": 8880,
-        "userName": "123456789",
-        "password": "4546456"
+        "port": 8880
     };
     /**
      * webSocket连接的IP以及端口
@@ -26,7 +24,15 @@ class CustomWebSocket{
      */
     _ws;
 
-    constructor(props = {"ip": "eee"}){
+    /**
+     * 连接打开时间
+     * @type Date
+     */
+    _openTime;
+
+
+
+    constructor(props = {}){
         Object.assign(this.props, props);
 
     }
@@ -36,8 +42,8 @@ class CustomWebSocket{
      * @public
      */
     connect = () => {
-        let {protocol, ip, port, userName, password} = this.props;
-        this._ws = new WebSocket(protocol + ":"+ip+":"+port+"?username="+ userName +"&password="+ password);
+        let {protocol, ip, port} = this.props;
+        this._ws = new WebSocket(protocol + ":"+ip+":"+port);
         this._ws.onerror = this._onError;
         this._ws.onopen = this._onOpen;
         this._ws.onmessage = this._onMessage;
@@ -49,6 +55,7 @@ class CustomWebSocket{
      * @private
      */
     _onError = (event) => {
+
         imStore.dispatch(lostConnect());
     };
     /**
@@ -57,7 +64,7 @@ class CustomWebSocket{
      * @private
      */
     _onOpen = (event) => {
-        console.log(event)
+        this._openTime = new Date();
     };
     /**
      * 对服务器返回的消息进行重新组织，然后进行动作分发
@@ -65,7 +72,13 @@ class CustomWebSocket{
      * @private
      */
     _onMessage = (event) => {
-
+        let response = event.data;
+        try {
+            response = JSON.parse(response);
+            imStore.dispatch(onMessage(MESSAGE_SCOPE.REMOTE, response))
+        }catch (e) {
+            console.log(e)
+        }
     };
     /**
      *

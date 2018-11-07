@@ -12,85 +12,37 @@ export default class ChatBody extends Message{
     /**
      * @private
      */
-    _from;
+    from;
     /**
      * @private
      */
-    _to;
+    to;
     /**
      * @private
      */
-    _msgType;
+    msgType;
     /**
      * @private
      */
-    _chatType;
+    chatType;
     /**
      * @private
      */
-    _content;
+    content;
     /**
      * @private
      */
-    _group_id;
+    group_id;
 
 
     constructor(cmd, extras, from, to, msgType, chatType, content, group_id) {
         super(cmd, extras);
-        this._from = from;
-        this._to = to;
-        this._msgType = msgType;
-        this._chatType = chatType;
-        this._content = content;
-        this._group_id = group_id;
-    }
-
-    get from() {
-        return this._from;
-    }
-
-    set from(value) {
-        this._from = value;
-    }
-
-    get to() {
-        return this._to;
-    }
-
-    set to(value) {
-        this._to = value;
-    }
-
-    get msgType() {
-        return this._msgType;
-    }
-
-    set msgType(value) {
-        this._msgType = value;
-    }
-
-    get chatType() {
-        return this._chatType;
-    }
-
-    set chatType(value) {
-        this._chatType = value;
-    }
-
-    get content() {
-        return this._content;
-    }
-
-    set content(value) {
-        this._content = value;
-    }
-
-    get group_id() {
-        return this._group_id;
-    }
-
-    set group_id(value) {
-        this._group_id = value;
+        this.from = from;
+        this.to = to;
+        this.msgType = msgType;
+        this.chatType = chatType;
+        this.content = content;
+        this.group_id = group_id;
     }
 
 }
